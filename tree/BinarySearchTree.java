@@ -1,166 +1,72 @@
 package tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class BinarySearchTree {
-    Node root = null;
-    private int node_count = 0;
+    static Node root;
 
-    private static class Node {
-        int data;
+    static class Node {
+        int key;
         Node left, right;
 
-        Node(Node left, Node right, int data) {
-            this.data = data;
-            this.left = left;
-            this.right = right;
+        public Node(int key) {
+            this.key = key;
+            left = right = null;
         }
     }
-    int size() {
-        return node_count;
+
+    public static void insert(int key) {
+        root = insertUtil(root, key);
     }
-    boolean isEmpty() {
-        return size() == 0;
+
+    public static Node insertUtil(Node root, int key) {
+
+        /* If the tree is empty,
+           return a new node */
+        if (root == null) {
+            root = new Node(key);
+            return root;
+        }
+        /* Otherwise, recur down the tree */
+        if (key < root.key)
+            root.left = insertUtil(root.left, key);
+        else if (key > root.key)
+            root.right = insertUtil(root.right, key);
+        /* return the (unchanged) node pointer */
+
+        return root;
     }
-    boolean contains(int data) {
-        return contains(root, data);
-    }
-    boolean contains(Node node, int data) {
-        if (node == null)
-            return false;
-        if (data < node.data)
-            return contains(node.left, data);
-        else if(data > node.data)
-            return contains(node.right, data);
-        else
-            return true;
-    }
-    void add(int data) {
-        if (contains(data))
+
+    // inorder traversal
+    public static void inorder(Node temp) {
+        if (temp == null)
             return;
-        root = add(root, data);
-        node_count++;
+        inorder(temp.left);
+        System.out.print(temp.key + " ");
+        inorder(temp.right);
     }
-    Node add(Node node, int data) {
-        if (node == null){
-            node = new Node(null, null, data);
-        }
-        else {
-            if (data < node.data) {
-                node.left = add(node.left, data);
-            }
-            else if(data > node.data)
-                node.right = add(node.right, data);
-        }
-        return node;
-    }
-    void preorder(Node node){
-        if(node==null)
-            return;
-            System.out.print(node.data+" ");
-            preorder(node.left);
-            preorder(node.right);
-    }
-    void postorder(Node node){
-        if(node==null)
-            return;
-        postorder(node.left);
-        postorder(node.right);
-        System.out.print(node.data+" ");
 
-    }
-    void inorder(Node node){
-        if(node==null)
-            return;
-        inorder(node.left);
-        System.out.print(node.data+ " ");
-        inorder(node.right);
-    }
-    /* Given a binary tree. Print its nodes in level order
-    using array for implementing queue  */
-    void levelOrder()
-    {
-        if(root==null)
-            throw new NullPointerException();
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty())
-        {
-            Node tempNode = queue.poll();
-            System.out.print(tempNode.data + " ");
+    // search key
+    public static Node search(Node root, int key) {
+        if (root == null || root.key == key)
+            return root;
 
-            /*Enqueue left child */
-            if (tempNode.left != null) {
-                queue.add(tempNode.left);
-            }
+        // key is in right subtree
+        if (root.key < key)
+            return search(root.right, key);
+        // key is in left subtree
+        return search(root.left, key);
+    }
 
-            /*Enqueue right child */
-            if (tempNode.right != null) {
-                queue.add(tempNode.right);
-            }
-        }
+    public static void main(String[] arg) {
+        insert(50);
+        insert(30);
+        insert(20);
+        insert(40);
+        insert(70);
+        insert(60);
+        insert(80);
+        inorder(root);
+        System.out.println();
+        System.out.println(search(root, 60));
     }
-    boolean remove(int data){
-        if(contains(data))
 
-        {
-            root = remove(root,data);
-            node_count--;
-            return true;
-        }
-        return false;
-    }
-    Node remove(Node node,int data){
-        if(data<node.data)
-            node.left = remove(node.left,data);
-        else if(data>node.data)
-            node.right = remove(node.right,data);
-        else{
-            if(node.left == null)
-            {
-                System.out.println(node.data);
-                Node right_child = node.right;
-               // node.data = null;
-                node = null;
-                return right_child;
-            }
-            else if(node.right == null)
-            {
-                Node left_child = node.left;
-               // node.data = null;
-                node = null;
-                return left_child;
-            }
-            else if(node.right!=null)
-            {
-                Node tmp = min_value(node.right);
-                node.data = tmp.data;
-
-                node.right = remove(node.right,tmp.data);
-            }
-        }
-        return node;
-    }
-    Node min_value(Node node){
-        while (node.left != null)
-             node = node.left;
-        return node;
-    }
-    public static void main(String[] arg){
-        BinarySearchTree tree = new BinarySearchTree();
-        tree.add(1);
-        tree.add(2);
-        tree.add(3);
-        tree.add(4);
-        tree.add(5);
-        tree.add(6);
-        tree.add(7);
-        tree.add(8);
-        tree.add(9);
-        tree.add(10);
-        tree.add(11);
-        tree.inorder(tree.root);
-
-    }
 }
