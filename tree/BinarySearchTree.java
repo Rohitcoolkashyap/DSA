@@ -56,17 +56,161 @@ public class BinarySearchTree {
         return search(root.left, key);
     }
 
+    // Remove a value from this binary tree if it exists, O(n)
+    public static boolean remove(int key) {
+        if (search(root, key).key == key) {
+            root = remove(root, key);
+            return true;
+        }
+        return false;
+    }
+
+    private static Node remove(Node node, int key) {
+        if (node == null) return null;
+
+        // Dig into left subtree, the value we're looking
+        // for is smaller than the current value
+        if (key < node.key) {
+            node.left = remove(node.left, key);
+        }
+        // Dig into right subtree, the value we're looking
+        // for is greater than the current value
+        else if (key > node.key) {
+            node.right = remove(node.right, key);
+        }
+        // Found the node we wish to remove
+        else {
+            // This is the case with only a right subtree or
+            // no subtree at all. In this situation just
+            // swap the node we wish to remove with its right child.
+            if (node.left == null) {
+                Node rightChild = node.right;
+                node = null;
+                return rightChild;
+            }
+            // This is the case with only a left subtree or
+            // no subtree at all. In this situation just
+            // swap the node we wish to remove with its left child.
+            else if (node.right == null) {
+                Node leftChild = node.left;
+                node = null;
+                return leftChild;
+            } else {
+
+                // When removing a node from a binary tree with two links the
+                // successor of the node being removed can either be the largest
+                // value in the left subtree or the smallest value in the right
+                // subtree. In this implementation I have decided to find the
+                // smallest value in the right subtree which can be found by
+                // traversing as far left as possible in the right subtree.
+
+                // Find the leftmost node in the right subtree
+                Node tmp = findMin(node.right);
+
+                // Swap the data
+                node.key = tmp.key;
+
+                // Go into the right subtree and remove the leftmost node we
+                // found and swapped data with. This prevents us from having
+                // two nodes in our tree with the same value.
+                node.right = remove(node.right, tmp.key);
+            }
+        }
+        return node;
+    }
+
+    private static Node findMin(Node node) {
+        while (node.left != null)
+            node = node.left;
+        return node;
+    }
+
+    // check is BST
+    static public boolean isBst(Node node, int min, int max) {
+        if (node == null) return true;
+        return node.key >= min && node.key <= max && isBst(node.left, min, node.key) && isBst(node.right, node.key, max);
+    }
+
+    // convert bst to sorted linkedlist
+    static class LinkedList {
+        private Node head;
+        private Node tail;
+
+        public LinkedList() {
+            head = null;
+            tail = null;
+        }
+    }
+
+    public static LinkedList flatten(Node root) {
+        LinkedList l = new LinkedList();
+        if (root == null) {
+            l.head = l.tail = null;
+            return l;
+        }
+
+        // Leaf Node
+        if (root.left == null && root.right == null) {
+            l.head = l.tail = root;
+            return l;
+        }
+        // Left in not null
+        if (root.left != null && root.right == null) {
+            LinkedList leftLL = flatten(root.left);
+            leftLL.tail.right = root;
+
+            l.head = leftLL.head;
+            l.tail = root;
+            return l;
+        }
+        // right is not null
+        if (root.left == null && root.right != null) {
+            LinkedList rightLL = flatten(root.right);
+
+            root.right = rightLL.head;
+
+            l.head = root;
+            l.tail = rightLL.tail;
+            return l;
+
+        }
+        // both Sides are not null
+        LinkedList leftLL = flatten(root.left);
+        LinkedList rightLL = flatten(root.right);
+
+        leftLL.tail.right = root;
+        root.right = rightLL.head;
+
+        l.head = leftLL.head;
+        l.tail = rightLL.tail;
+        return l;
+    }
+
     public static void main(String[] arg) {
         insert(50);
         insert(30);
         insert(20);
         insert(40);
-        insert(70);
-        insert(60);
-        insert(80);
+        insert(45);
+
         inorder(root);
+//
+//        remove(30);
+//        System.out.println();
+//        inorder(root);
+//
+//        System.out.println("\ncheck bst : " + isBst(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
         System.out.println();
-        System.out.println(search(root, 60));
+
+        LinkedList l = flatten(root);
+        Node t = l.head;
+        while (t != null) {
+            System.out.print(t.key + " ");
+            t = t.right;
+        }
+
+
     }
 
 }
