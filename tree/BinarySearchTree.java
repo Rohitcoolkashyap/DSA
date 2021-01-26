@@ -185,8 +185,14 @@ public class BinarySearchTree {
         l.tail = rightLL.tail;
         return l;
     }
-
+static void s(int[] b){
+        b[0] = 100;
+    System.out.println(b[0]);
+}
     public static void main(String[] arg) {
+        int[] b = new int[2];
+        s(b);
+        System.out.println(b[0]);
         insert(50);
         insert(30);
         insert(20);

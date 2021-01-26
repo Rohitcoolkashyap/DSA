@@ -1,6 +1,8 @@
+package graph;
+
 import java.util.*;
 
-class AdjacencyList_generic<T> {
+public class AdjacencyList_generic<T> {
 
     // We use Hashmap to store the edges in the graph
     private final Map<T, List<T>> adjList = new HashMap<>();
@@ -107,15 +109,14 @@ class AdjacencyList_generic<T> {
             }
         }
     }
-
     // BFS shortest path
     public void bfs_shortest_path(T source) {
         Queue<T> q = new LinkedList<>();
-        Map<T, Integer> distances = new HashMap<>();
-        Map<T, T> parent = new HashMap<>();
+        Map<T,Integer> distances = new HashMap<>();
+        Map<T,T> parent = new HashMap<>();
 
         q.offer(source);
-        distances.put(source, 0);
+        distances.put(source,0);
         while (!q.isEmpty()) {
             T node = q.peek();
             System.out.print(node + " ");
@@ -126,21 +127,21 @@ class AdjacencyList_generic<T> {
             ) {
                 if (!distances.containsKey(neighbour)) {
                     q.offer(neighbour);
-                    distances.put(neighbour, distances.get(node) + 1);
-                    parent.put(neighbour, node);
+                    distances.put(neighbour,distances.get(node)+1);
+                    parent.put(neighbour,node);
                 }
             }
         }
-        for (T i : distances.keySet()
-        ) {
-            System.out.println("\ndist of node " + i + " from " + source + " is " + distances.get(i));
+        for (T i:distances.keySet()
+             ) {
+            System.out.println("\ndist of node "+i+" from "+source+" is "+distances.get(i));
 
         }
     }
 
     public void dfdUtil(T vertex, Set<T> isVisited) {
         isVisited.add(vertex);
-        System.out.print(vertex + " ");
+        System.out.print(vertex+" ");
 
         // for the neighbours of the current node , if not visited
 
@@ -158,50 +159,57 @@ class AdjacencyList_generic<T> {
         dfdUtil(source, isVisited);
     }
 
+    // Topological sort
+//    public void topologicalSortUtil(int i,boolean[] visited,Stack<Integer> stack){
+//        visited[i] = true;
+//
+//        for (T neighbours:adjList.get()
+//             ) {
+//
+//        }
+//
+//    }
+//    public  void topologicalSort(){
+//        Stack<Integer> stack = new Stack<>();
+//        int v =  adjList.keySet().size();
+//        boolean[] visited = new boolean[v];
+//
+//        for (int i = 0; i < v; i++) {
+//            if(!visited[i])
+//                topologicalSortUtil(i,visited,stack);
+//
+//        }
+//    }
+    
+    void dfsTopologicalSort(){
+        Map<T,Boolean> visited = new HashMap<>();
+        List<T> ordering = new LinkedList<>();
 
-}
+        for (T vertex:adjList.keySet()
+             ) {
+            
+        }
+    }
 
-class Test {
     public static void main(String[] arg) {
-        Scanner s = new Scanner(System.in);
-        int t = s.nextInt();
-        while (t-- > 0) {
-            int r = s.nextInt();
-            int c = s.nextInt();
 
-            char[][] mat = new char[r][c];
-            for (int i = 0; i < r; i++) {
-                for (int j = 0; j < c; j++) {
-                    mat[i][j] = s.next().charAt(0);
+        // Object of graph is created.
+        AdjacencyList_generic<Integer> g = new AdjacencyList_generic<>();
 
-                }
+        // edges are added.
+        // Since the graph is bidirectional,
+        // so boolean bidirectional is passed as true.
 
-            }
-
-            // Object of graph is created.
-            graph.AdjacencyList_generic<Character> g = new graph.AdjacencyList_generic<>();
-
-            // edges are added.
-            // Since the graph is bidirectional,
-            // so boolean bidirectional is passed as true.
-            int k=0;
-            for (int i = 0; i < r-1; i++) {
-                for (int j = 0; j < c-1; j++) {
-
-                 g.addEdge(mat[i][j],mat[i][j+1],true);
-
-                }
-
-            }
-//            g.addEdge(0, 4, true);
-//            g.addEdge(1, 2, true);
-//            g.addEdge(1, 3, true);
-//            g.addEdge(1, 4, true);
-//            g.addEdge(2, 3, true);
-//            g.addEdge(3, 4, true);
-            // print the graph.
-            System.out.println("Graph:\n"
-                    + g.toString());
+        g.addEdge(0, 1, true);
+        g.addEdge(0, 4, true);
+        g.addEdge(1, 2, true);
+        g.addEdge(1, 3, true);
+        g.addEdge(1, 4, true);
+        g.addEdge(2, 3, true);
+        g.addEdge(3, 4, true);
+        // print the graph.
+        System.out.println("Graph:\n"
+                + g.toString());
 
 
  /*       // gives the no of vertices in the graph.
@@ -221,9 +229,8 @@ class Test {
 //        g.dfs(0);
 
 
-          //  g.bfs_shortest_path(2);
-        }
-
-
+        g.bfs_shortest_path(2);
+       // g.topologicalSort();
     }
+
 }

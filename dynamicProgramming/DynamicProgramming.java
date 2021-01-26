@@ -1,5 +1,6 @@
 package dynamicProgramming;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DynamicProgramming {
@@ -29,7 +30,7 @@ public class DynamicProgramming {
 
 
 //    public static int knapsack_max_profit(ArrayList<Integer> w, ArrayList<Integer> p, int maxWeight, int n) {
-//        System.out.println("count = " + (++count));
+//        //System.out.println("count = " + (++count));
 //        if (maxWeight == 0 || n == 0) {
 //            return 0;
 //        }
@@ -45,25 +46,25 @@ public class DynamicProgramming {
 //    }
 
 
-    // top-down approach
-//    public static int knapsack_max_profit(ArrayList<Integer> w, ArrayList<Integer> p, int maxWeight, int n) {
-//        int[][] t = new int[n + 1][maxWeight + 1];
-//        for (int i = 0; i < n + 1; i++) {
-//            for (int j = 0; j < maxWeight + 1; j++) {
-//                if (i == 0 || j == 0)
-//                    t[i][j] = 0;
-//            }
-//        }
-//        for (int i = 1; i < n + 1; i++) {
-//            for (int j = 1; j < maxWeight + 1; j++) {
-//                if (w.get(i - 1) <= j) {
-//                    t[i][j] = Math.max(p.get(i - 1) + t[i - 1][j - w.get(i - 1)], t[i - 1][j]);
-//                } else
-//                    t[i][j] = t[i - 1][j];
-//            }
-//        }
-//        return t[n][maxWeight];
-//    }
+     // Top-down approach
+    public static int knapsack_max_profit(ArrayList<Integer> w, ArrayList<Integer> p, int maxWeight, int n) {
+        int[][] t = new int[n + 1][maxWeight + 1];
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < maxWeight + 1; j++) {
+                if (i == 0 || j == 0)
+                    t[i][j] = 0;
+            }
+        }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < maxWeight + 1; j++) {
+                if (w.get(i - 1) <= j) {
+                    t[i][j] = Math.max(p.get(i - 1) + t[i - 1][j - w.get(i - 1)], t[i - 1][j]);
+                } else
+                    t[i][j] = t[i - 1][j];
+            }
+        }
+        return t[n][maxWeight];
+    }
 
     static boolean subset_sum(int[] a, int n, int sum) {
         boolean[][] t = new boolean[n + 1][sum + 1];
