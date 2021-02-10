@@ -68,8 +68,10 @@ class BinaryTree {
 
     static void levelOrderPrint(Node temp, int level) {
         if (temp == null) return;
-        if (level == 1)
+        if (level == 1) {
             System.out.print(temp.key + " ");
+            return;
+        }
         levelOrderPrint(temp.left, level - 1);
         levelOrderPrint(temp.right, level - 1);
     }
@@ -124,10 +126,10 @@ class BinaryTree {
      in binary tree */
 
     static void deleteDeepest(Node root, Node delNode) {
-        Queue<Node> q = new LinkedList<Node>();
+        Queue<Node> q = new LinkedList<>();
         q.add(root);
 
-        Node temp = null;
+        Node temp;
 
         while (!q.isEmpty()) {
             temp = q.peek();
@@ -162,8 +164,7 @@ class BinaryTree {
         if (root.left == null && root.right == null) {
             if (root.key == key)
                 return;
-            else
-                return;
+            return;
         }
 
         Queue<Node> q = new LinkedList<>();
@@ -411,6 +412,8 @@ class BinaryTree {
 
         root = createTreeFromTrav(in, pre, 0, in.length - 1);
         levelOrder(root);
+        System.out.println();
+        levelOrderIterative(root);
     }
 }
 

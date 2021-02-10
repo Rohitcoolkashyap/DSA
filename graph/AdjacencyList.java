@@ -21,12 +21,11 @@ public class AdjacencyList {
         for (int i = 0; i < list.size(); i++) {
             System.out.print(i + "-> ");
             for (int j = 0; j < list.get(i).size(); j++) {
-                System.out.print(list.get(i).get(j)+", ");
+                System.out.print(list.get(i).get(j) + ", ");
             }
             System.out.println();
         }
     }
-
     public static void main(String[] arg) {
         AdjacencyList graph = new AdjacencyList(4);
         graph.addEdge(0, 1);

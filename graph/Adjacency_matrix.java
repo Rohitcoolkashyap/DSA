@@ -31,16 +31,15 @@ public class Adjacency_matrix {
     }
     public static void main(String[] arg){
 
+
         Adjacency_matrix gp = new Adjacency_matrix(4);
         gp.addVertices('a','b','c','d');
         gp.addEgde(0,1);
         gp.addEgde(0,2);
         gp.addEgde(0,3);
-
         gp.addEgde(1,2);
+
         System.out.println(Arrays.toString(gp.vertices));
         gp.show();
-
-
      }
 }

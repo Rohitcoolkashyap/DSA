@@ -38,7 +38,25 @@ public class StackProblems {
 //        }
 //        Collections.reverse(al);
 //        return al;
-    //  }
+//      }
+//        static ArrayList<Integer> nearest_greatest_toLeft(int[] a) {
+//        Stack<Integer> stack = new Stack<>();
+//        ArrayList<Integer> al = new ArrayList<>();
+//        for (int i = 0; i < a.length; i++) {
+//            if (stack.isEmpty()) {
+//                al.add(-1);
+//            } else {
+//                while (!stack.isEmpty() && a[i] >= stack.peek())
+//                    stack.pop();
+//                if (stack.isEmpty())
+//                    al.add(-1);
+//                else
+//                    al.add(stack.peek());
+//            }
+//            stack.add(a[i]);
+//        }
+//        return al;
+//    }
 //    static ArrayList<Integer> nearest_smallest_toRight(int[] a) {
 //        Stack<Integer> stack = new Stack<>();
 //        ArrayList<Integer> al = new ArrayList<>();
@@ -60,24 +78,7 @@ public class StackProblems {
 //    }
 
     //
-//    static ArrayList<Integer> nearest_greatest_toLeft(int[] a) {
-//        Stack<Integer> stack = new Stack<>();
-//        ArrayList<Integer> al = new ArrayList<>();
-//        for (int i = 0; i < a.length; i++) {
-//            if (stack.isEmpty()) {
-//                al.add(-1);
-//            } else {
-//                while (!stack.isEmpty() && a[i] >= stack.peek())
-//                    stack.pop();
-//                if (stack.isEmpty())
-//                    al.add(-1);
-//                else
-//                    al.add(stack.peek());
-//            }
-//            stack.add(a[i]);
-//        }
-//        return al;
-//    }
+
 //
 //    static ArrayList<Integer> nearest_smallest_toLeft(int[] a) {
 //        Stack<Integer> stack = new Stack<>();
