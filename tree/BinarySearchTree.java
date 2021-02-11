@@ -189,6 +189,20 @@ static void s(int[] b){
         b[0] = 100;
     System.out.println(b[0]);
 }
+
+
+/*    Binary Search Tree : Lowest Common Ancestor
+    public static Node lca(Node root, int v1, int v2) {
+
+        if(root == null)
+            return null;
+        if(root.data < v1 && root.data < v2)
+            return lca(root.right,v1,v2);
+        else if(root.data > v1 && root.data > v2)
+            return lca(root.left,v1,v2);
+        else
+            return root;
+    }*/
     public static void main(String[] arg) {
         int[] b = new int[2];
         s(b);

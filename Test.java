@@ -18,10 +18,10 @@ class Test {
         // Comparator shortcut method
 
         // Min heap
-        PriorityQueue<Pair> pq = new PriorityQueue<>((t1, t2) -> Integer.compare(t1.key, t2.key));
+        //PriorityQueue<Pair> pq = new PriorityQueue<>((t1, t2) -> Integer.compare(t1.key, t2.key));
 
         // Max heap
-        //PriorityQueue<Pair> pq = new PriorityQueue<>((t1, t2) -> Integer.compare(t2.key, t1.key));
+        PriorityQueue<Pair> pq = new PriorityQueue<>((t1, t2) -> Integer.compare(t2.key, t1.key));
 
         pq.add(new Pair(1, 22));
         pq.add(new Pair(3, 43));
@@ -32,5 +32,7 @@ class Test {
             System.out.println(pq.peek().key + " " + pq.peek().val);
             pq.poll();
         }
+
+
     }
 }
